@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,18 +34,29 @@ public class SearchItem extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.addHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		JSONArray array = new JSONArray();
+		/*
+		JSONObject obj = new JSONObject();
 		String username = "";
 		if(request.getParameter("username")!=null) {
 			username = request.getParameter("username");
 		}
-		JSONObject obj = new JSONObject();
 		try {
 			obj.put("username",username);
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
-		PrintWriter out = response.getWriter();
-		out.println(obj);
+		*/
+		//return a list of value
+		try {
+			array.put(new JSONObject().put("username", "abcd"));
+			array.put(new JSONObject().put("username", "1234"));
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		out.println(array);
 		out.flush();
 		out.close();
 	}
