@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Servlet implementation class SearchItem
  */
@@ -28,14 +31,22 @@ public class SearchItem extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("tex/html");
+		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		String username = "";
+		if(request.getParameter("username")!=null) {
+			username = request.getParameter("username");
+		}
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("username",username);
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
 		PrintWriter out = response.getWriter();
-		out.println("<html><body");
-		out.println("<h1> This is a HTML page </h1>");
-		out.println("</body></html>");
+		out.println(obj);
 		out.flush();
 		out.close();
-		System.out.println(response.getWriter().append("Served at: ").append(request.getContextPath()));
 	}
 
 	/**
