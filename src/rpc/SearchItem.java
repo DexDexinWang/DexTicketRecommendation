@@ -1,7 +1,6 @@
 package rpc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,33 +31,15 @@ public class SearchItem extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		PrintWriter out = response.getWriter();
+		//use helper function
 		JSONArray array = new JSONArray();
-		/*
-		JSONObject obj = new JSONObject();
-		String username = "";
-		if(request.getParameter("username")!=null) {
-			username = request.getParameter("username");
-		}
 		try {
-			obj.put("username",username);
-		} catch(JSONException e) {
+			array.put(new JSONObject().put("name", "abcd").put("address", "san francisco").put("time", "01/01/2017"));
+			array.put(new JSONObject().put("name", "1234").put("address", "san jose").put("time", "01/02/2017"));
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		*/
-		//return a list of value
-		try {
-			array.put(new JSONObject().put("username", "abcd"));
-			array.put(new JSONObject().put("username", "1234"));
-		} catch(JSONException e) {
-			e.printStackTrace();
-		}
-		
-		out.println(array);
-		out.flush();
-		out.close();
+		RpcHelper.writeJSONArray(response, array);
 	}
 
 	/**
