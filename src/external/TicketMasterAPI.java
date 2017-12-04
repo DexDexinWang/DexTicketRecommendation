@@ -1,13 +1,19 @@
 package external;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import entity.Item;
+import entity.Item.ItemBuilder;
 
 public class TicketMasterAPI {
 	private static final String API_PROTOCOL = "http://";
@@ -58,6 +64,37 @@ public class TicketMasterAPI {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private List<Item> getItemList(JSONArray events) throws JSONException {
+		List<Item> itemList = new ArrayList<>();
+		ItemBuilder builder = new ItemBuilder();
+
+		return itemList;
+	}
+	
+	private JSONObject getVenue(JSONObject event) throws JSONException {
+		return null;
+	}
+	
+	private String getImageUrl(JSONObject event) throws JSONException {
+		return null;
+	}
+	
+	private String GetDescription(JSONObject event) throws JSONException {
+		return null;
+	}
+	
+	private Set<String> getCategories(JSONObject event) throws JSONException {
+		return null;
+	}
+	
+	private String getStringFieldOrNull(JSONObject event, String field) throws JSONException {
+		return event.isNull(field) ? null: event.getString(field);
+	}
+	
+	private double getNumericFieldOrNull(JSONObject event, String field) throws JSONException {
+		return event.isNull(field) ? 0.0: event.getDouble(field);
 	}
 	
 	//convert a string as a URL value with "UTF-8" encode
