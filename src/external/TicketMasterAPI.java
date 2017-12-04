@@ -16,13 +16,14 @@ import org.json.JSONObject;
 import entity.Item;
 import entity.Item.ItemBuilder;
 
-public class TicketMasterAPI {
+public class TicketMasterAPI implements ExternalAPI {
 	private static final String API_PROTOCOL = "http://";
 	private static final String API_HOST = "app.ticketmaster.com";
 	private static final String SEARCH_PATH = "/discovery/v2/events.json";
 	private static final String DEFAULT_TERM = "";  // no restriction
 	private static final String API_KEY = "vdIdLhDohOWdwL6y41SKJxQPbudMARpw";
 	
+	@Override
 	public List<Item> search(double lat, double lon, String term) {
 		//get first part of url 
 		String url = API_PROTOCOL + API_HOST + SEARCH_PATH;

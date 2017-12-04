@@ -14,7 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import entity.Item;
-import external.TicketMasterAPI;
+import external.ExternalAPI;
+import external.ExternalAPIFactory;
 
 /**
  * Servlet implementation class SearchItem
@@ -40,8 +41,10 @@ public class SearchItem extends HttpServlet {
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
 		String term = request.getParameter("term");
-		TicketMasterAPI externalAPI = new TicketMasterAPI();
-		List<Item> items = externalAPI.search(lat, lon, term);
+		//use factory style to define interface use different api
+		ExternalAPI api = ExternalAPIFactory.getExternalAPI();
+		List<Item> items = api.search(lat, lon, term);
+		
 		List<JSONObject> list = new ArrayList<>();
 		try {
 			for (Item item : items) {
