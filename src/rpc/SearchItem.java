@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import db.DBConnection;
+import db.DBConnectionFactory;
 import entity.Item;
-import external.ExternalAPI;
-import external.ExternalAPIFactory;
 
 /**
  * Servlet implementation class SearchItem
@@ -37,14 +37,13 @@ public class SearchItem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//use helper function
-		
+		String userId = request.getParameter("user_id");
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
 		String term = request.getParameter("term");
 		//use factory style to define interface use different api
-		ExternalAPI api = ExternalAPIFactory.getExternalAPI();
-		List<Item> items = api.search(lat, lon, term);
-		
+		DBConnection conn = DBConnectionFactory.getDBConnection();
+		List<Item> items = conn.searchItems(userId, lat, lon, term);
 		List<JSONObject> list = new ArrayList<>();
 		try {
 			for (Item item : items) {
